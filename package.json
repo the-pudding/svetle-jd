@@ -39,5 +39,8 @@
     "predeploy": "npm run build",
     "deploy": "rollup -c rollup.config-ssr.js",
     "start": "sirv public"
+  },
+  "dependencies": {
+    "d3": "^6.2.0"
   }
 }
