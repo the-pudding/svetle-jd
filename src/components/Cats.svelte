@@ -108,7 +108,16 @@
             <p>{column[0]}</p>
             {#each column[1] as cat, i}
                 <div on:click={catClick} bind:clientWidth={w} style='height: {w}px' class='block' id='block-{column[0].replace(/\s/g, '')}-{i}'>
-                    <img src="assets/imgs/{cat.replace(/\s/g, '')}.png" alt="{cat} cat">
+                    <div class='img-wrapper'>
+                        <img src="assets/imgs/{cat.replace(/\s/g, '')}.png" alt="{cat} cat">
+                        {#if cat == 'black'}
+                            <img class='whiskers' src="assets/imgs/gray-whiskers.png" alt="whiskers">
+                        {:else if cat == 'tuxedo'}
+                            <img class='whiskers' src="assets/imgs/gray-whiskers.png" alt="whiskers">
+                        {:else}
+                            <img class='whiskers' src="assets/imgs/black-whiskers.png" alt="whiskers">
+                        {/if}   
+                    </div>
                     <p>{cat}</p>
                 </div>
             {/each}
@@ -172,8 +181,15 @@
         font-family: 'Balsamiq Sans', var(--sans);
     }
 
-    .row img {
+    .img-wrapper {
         width: 75%;
+        height: 75%;
+        position: relative;
+    }
+
+    .img-wrapper img {
+        width: 100%;
+        position: absolute;
     }
 
     .block {
@@ -207,6 +223,7 @@
         left: 50%;
         transform: translate(-50%, -50%);
         mix-blend-mode: multiply;
+        z-index: 1000;
     }
 
     #controls {
@@ -271,6 +288,18 @@
         text-align: center;
         padding: 1rem;
     }
+    .whiskers:hover {
+        animation-name: tilt;
+        animation-duration: 1s;
+        animation-iteration-count: infinite;
+    }
+
+    @keyframes tilt {
+        0%   {transform: rotate(0deg)}
+        25%  {transform: rotate(3deg)}
+        50%  {transform: rotate(-3deg)}
+        100% {transform: rotate(0deg)}
+    }
 
     @media only screen and (max-width: 640px) {
         #cats {
@@ -286,8 +315,9 @@
             font-size: 0.75rem;
         }
 
-        .row img {
+        .img-wrapper {
             width: 70%;
+            height: 70%;
         }
 
         .block p {
