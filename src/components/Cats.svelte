@@ -120,6 +120,9 @@
     <button on:click={newCardClick}>Get new card</button>
     <button on:click={clearClick}>Clear card</button>
 </section>
+<section id='credits'>
+    <p>Made by <a href='https://twitter.com/jadiehm' target='_blank'>Jan</a>. Inspired by walks with <a href='https://twitter.com/sarahserp' target='_blank'>Sarah</a>. In memory of <a href='http://jadiehm.github.io/' target='_blank'>Rory</a> and in honor of <a href='https://www.instagram.com/woo.can.too/' target='_blank'>Woo</a>. Built while learning <a href='https://svelte.dev/' target='_blank'>Svelte</a>.</p>
+</section>
 
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Balsamiq+Sans&display=swap');
@@ -245,7 +248,7 @@
     .bingo p {
         font-family: 'Balsamiq Sans', var(--sans);
         font-weight: 700;
-        font-size: 10rem !important;
+        font-size: 10rem;
         color: #f93e19;
     }
 
@@ -254,6 +257,19 @@
         top: 30%;
         left: 50%;
         transform: translate(-50%, -50%);
+    }
+
+    #credits {
+        position: absolute;
+        bottom: 0%;
+        left: 50%;
+        transform: translate(-50%, 0%);
+        font-family: var(--sans);
+        color: var(--gray-dark);
+        font-size: 0.75rem;
+        width: 100%;
+        text-align: center;
+        padding: 1rem;
     }
 
     @media only screen and (max-width: 640px) {

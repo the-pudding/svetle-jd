@@ -69,6 +69,10 @@
 	fill: currentColor;
 }
 
+#content {
+	padding: 1rem;
+}
+
 /* demo */
 #demo svg {
 	width: 1em;
