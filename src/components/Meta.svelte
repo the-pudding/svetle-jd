@@ -3,13 +3,13 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-  <meta name="description" content="A cat lovers game to make your neighborhood strolls more competitive." />
+  <meta name="description" content="A cat lovers game to make your strolls more competitive." />
   <meta name="news_keywords" content="cat, cats, walk, bingo, game, neighborhood, svelte" />
 
   <meta property="og:title" content="" />
   <meta property="og:site_name" content="" />
   <meta property="og:url" content="" />
-  <meta property="og:description" content="description" />
+  <meta property="og:description" content="A cat lovers game to make your strolls more competitive." />
   <meta property="og:type" content="article" />
   <meta property="og:locale" content="en_US" />
 
