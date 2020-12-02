@@ -1,9 +1,11 @@
 <script>
     import {selection, select, selectAll} from "d3-selection";
+    import { fly } from 'svelte/transition';
     let w;
     const catPlaces = [ 'car', 'porch', 'yard']
     const catTypes = [ 'tuxedo', 'gray tabby', 'orange tabby', 'black', 'calico', 'gray', 'gray and white', 'orange and white', 'white', 'brown tabby'];
     let bingoColumn;
+    let bingo = false;
     let allColumns;
     let foundCat = false;
 
@@ -46,6 +48,7 @@
 
     function revealBingo() {
         console.log('bingo')
+        bingo = true
         let bingoText = selectAll('.bingo')
         bingoText.classed('is-visible', true)
     }
@@ -62,6 +65,7 @@
         allColumns = catPlaces.map(getCats) 
         let foundCats = selectAll('.found')
         foundCats.classed('found', false)
+        bingo = false
         let bingoText = selectAll('.bingo')
         bingoText.classed('is-visible', false)
     }
@@ -69,6 +73,7 @@
     function clearClick() {
         let foundCats = selectAll('.found')
         foundCats.classed('found', false)
+        bingo = false
         let bingoText = selectAll('.bingo')
         bingoText.classed('is-visible', false)
     }
@@ -95,10 +100,14 @@
     <button on:click={clearClick}>Clear card</button>
 </section>
 <section class='bingo'>
-   <p>BINGO!</p>
+    {#if bingo}
+        <p transition:fly="{{ y: 100, duration: 500 }}">BINGO!</p>
+    {/if}
 </section>
 
 <style>
+    @import url('https://fonts.googleapis.com/css2?family=Balsamiq+Sans&display=swap');
+
     #cats {
         max-width: 40rem;
         margin: 0 auto;
@@ -119,9 +128,11 @@
     } 
 
     .row p {
-        text-transform: capitalize;
+        text-transform: uppercase;
         font-weight: 700;
+        font-size: 1.5rem;
         margin: 0;
+        font-family: 'Balsamiq Sans', var(--sans);
     }
 
     .row img {
@@ -129,7 +140,7 @@
     }
 
     .block {
-        background-color: #fffbb3;
+        background-color: var(--white);
         border-radius: 0.5rem;
         margin: 0.5rem;
         position: relative;
@@ -142,6 +153,8 @@
     .block p {
         text-transform: none;
         font-weight: 500; 
+        font-family: 'Balsamiq Sans', var(--sans);
+        font-size: 1rem;
     }
 
     .found {
@@ -150,13 +163,17 @@
 
     .found::before {
         position: absolute;
-        content: 'X';
+        content: '';
         font-size: 10rem;
-	    color:red;
+        background-color:#8fd8f2;
+        border-radius: 50%;
+        width: 70%;
+        height: 70%;
         margin: 0;
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
+        mix-blend-mode: multiply;
     }
 
     #controls {
@@ -169,15 +186,17 @@
 
     button {
         margin: 0 0.5rem;
+        font-family: 'Balsamiq Sans', var(--sans);
     }
 
     .bingo {
         display: none;
         position: absolute;
         z-index: 1000;
-        top: 40%;
+        top: 60%;
         left: 50%;
         transform: translate(-50%, -50%);
+        transition: 1s ease-in-out;
     }
 
     .is-visible {
@@ -185,7 +204,7 @@
     }
 
     .bingo p {
-        font-family: var(--sans);
+        font-family: 'Balsamiq Sans', var(--sans);
         font-weight: 700;
         font-size: 10rem;
     }
