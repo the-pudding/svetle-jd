@@ -1,36 +1,71 @@
 <script>
+    // IMPORTS
     import {selection, select, selectAll} from "d3-selection";
     import { fly } from 'svelte/transition';
-    let w;
-    const catPlaces = [ 'car', 'porch', 'yard']
-    const catTypes = [ 'tuxedo', 'gray tabby', 'orange tabby', 'black', 'calico', 'gray', 'gray and white', 'orange and white', 'white', 'brown tabby'];
-    let bingoColumn;
-    let bingo = false;
-    let allColumns;
-    let foundCat = false;
+    import Confetti from "./Confetti.svelte";
 
+    // VARIABLES
+    let w;
+    const catPlaces = [ 'on a car', 'on the porch', 'in the yard']
+    const catTypes = [ 'tuxedo', 'gray tabby', 'orange tabby', 'black', 'calico', 'gray', 'gray and white', 'orange and white', 'white', 'brown tabby'];
+    let bingo = false;
+    let bingoColumn;
+    let allColumns;
+
+    // INTERACTIONS
+    function catClick() {
+        let catID = this.id
+        let catDiv = document.getElementById(catID)
+        catDiv.classList.contains('found') ? catDiv.classList.remove('found') : catDiv.classList.add('found');
+        checkBingo();
+    }
+
+    function newCardClick() {
+        allColumns = catPlaces.map(getCats)
+        const foundCats = selectAll('.found') 
+        foundCats.classed('found', false)
+        bingo = false
+        const bingoText = selectAll('.bingo')
+        bingoText.classed('is-visible', false)
+        const bingoBoard = selectAll('#cats') 
+        bingoBoard.classed('is-dimmed', false)
+        const bingoBlocks = selectAll('.block') 
+        bingoBlocks.classed('is-inactive', false)
+    }
+
+    function clearClick() {
+        const foundCats = selectAll('.found')
+        foundCats.classed('found', false)
+        bingo = false
+        const bingoText = selectAll('.bingo')
+        bingoText.classed('is-visible', false)
+        const bingoBoard = selectAll('#cats') 
+        bingoBoard.classed('is-dimmed', false)
+        const bingoBlocks = selectAll('.block') 
+        bingoBlocks.classed('is-inactive', false)
+    }
+
+    // SET UP BOARD
     function getCats(place, i) {
         bingoColumn = catTypes.sort(() => Math.random() - Math.random()).slice(0, 3)
         bingoColumn = [place, bingoColumn]
         return bingoColumn
     }
+    allColumns = catPlaces.map(getCats)
 
-    function toggle() {
-        foundCat = !foundCat;
-    }
-
+    // BINGO
     function checkBingo() {
-        let blockCar0 = document.getElementById('block-car-0').classList.contains('found')
-        let blockCar1 = document.getElementById('block-car-1').classList.contains('found')
-        let blockCar2 = document.getElementById('block-car-2').classList.contains('found')
+        let blockCar0 = document.getElementById('block-onacar-0').classList.contains('found')
+        let blockCar1 = document.getElementById('block-onacar-1').classList.contains('found')
+        let blockCar2 = document.getElementById('block-onacar-2').classList.contains('found')
 
-        let blockPorch0 = document.getElementById('block-porch-0').classList.contains('found')
-        let blockPorch1 = document.getElementById('block-porch-1').classList.contains('found')
-        let blockPorch2 = document.getElementById('block-porch-2').classList.contains('found')
+        let blockPorch0 = document.getElementById('block-ontheporch-0').classList.contains('found')
+        let blockPorch1 = document.getElementById('block-ontheporch-1').classList.contains('found')
+        let blockPorch2 = document.getElementById('block-ontheporch-2').classList.contains('found')
 
-        let blockYard0 = document.getElementById('block-yard-0').classList.contains('found')
-        let blockYard1 = document.getElementById('block-yard-1').classList.contains('found')
-        let blockYard2 = document.getElementById('block-yard-2').classList.contains('found')
+        let blockYard0 = document.getElementById('block-intheyard-0').classList.contains('found')
+        let blockYard1 = document.getElementById('block-intheyard-1').classList.contains('found')
+        let blockYard2 = document.getElementById('block-intheyard-2').classList.contains('found')
 
         //bingo check
         //columns
@@ -47,77 +82,76 @@
     }
 
     function revealBingo() {
-        console.log('bingo')
         bingo = true
-        let bingoText = selectAll('.bingo')
+        const bingoText = selectAll('.bingo')
         bingoText.classed('is-visible', true)
+        const bingoBoard = selectAll('#cats') 
+        bingoBoard.classed('is-dimmed', true)
+        const bingoBlocks = selectAll('.block') 
+        bingoBlocks.classed('is-inactive', true)
     }
-
-    function catClick() {
-        let catID = this.id
-        let catDiv = document.getElementById(catID)
-        toggle();
-        foundCat ? catDiv.classList.add('found') : catDiv.classList.remove('found')
-        checkBingo();
-    }
-
-    function newCardClick() {
-        allColumns = catPlaces.map(getCats) 
-        let foundCats = selectAll('.found')
-        foundCats.classed('found', false)
-        bingo = false
-        let bingoText = selectAll('.bingo')
-        bingoText.classed('is-visible', false)
-    }
-
-    function clearClick() {
-        let foundCats = selectAll('.found')
-        foundCats.classed('found', false)
-        bingo = false
-        let bingoText = selectAll('.bingo')
-        bingoText.classed('is-visible', false)
-    }
-
-    allColumns = catPlaces.map(getCats)
-   console.log(allColumns)
 </script>
 
+<section class='bingo'>
+    {#if bingo}
+        <p transition:fly="{{ y: 100, duration: 500 }}">BINGO!</p>
+        <div class="confetti">
+            <Confetti />
+        </div>
+    {/if}
+</section>
 <section id='cats'>
-    {#each allColumns as column, i}
-        <div class='row row-{column[0]}'>
+    <p class='header'>neighborhood cat bingo</p>
+    <div class='board'>
+        {#each allColumns as column, i}
+        <div class='row row-{column[0].replace(/\s/g, '')}'>
             <p>{column[0]}</p>
             {#each column[1] as cat, i}
-                <div on:click={catClick} bind:clientWidth={w} style='height: {w}px' class='block' id='block-{column[0]}-{i}'>
+                <div on:click={catClick} bind:clientWidth={w} style='height: {w}px' class='block' id='block-{column[0].replace(/\s/g, '')}-{i}'>
                     <img src="assets/imgs/{cat.replace(/\s/g, '')}.png" alt="{cat} cat">
                     <p>{cat}</p>
                 </div>
             {/each}
         </div>
     {/each}
+    </div>
 </section>
 <section id='controls'>
     <button on:click={newCardClick}>Get new card</button>
     <button on:click={clearClick}>Clear card</button>
 </section>
-<section class='bingo'>
-    {#if bingo}
-        <p transition:fly="{{ y: 100, duration: 500 }}">BINGO!</p>
-    {/if}
-</section>
 
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Balsamiq+Sans&display=swap');
 
-    #cats {
-        max-width: 40rem;
-        margin: 0 auto;
+    .header {
+        width: 100%;
+        font-family: 'Balsamiq Sans', var(--sans);
+        text-align: center;
+        font-size: 2.5rem;
+        text-transform: uppercase;
+        margin: 0 0 2rem 0;
+        color: var(--gray-dark);
+    }
+
+    .board {
         display: flex;
         flex-direction: row;
+        width: 100%;
+    }
+
+    #cats {
+        max-width: 40rem;
+        margin: 2rem auto;
+        display: flex;
+        flex-direction: column;
         justify-content: space-between;
         background-color: var(--off-white);
         padding: 2rem;
         border-radius: 0.5rem;
         font-family: var(--sans);
+        position: relative;
+        transition: 1s ease-in-out;
     }
 
     .row {
@@ -130,7 +164,7 @@
     .row p {
         text-transform: uppercase;
         font-weight: 700;
-        font-size: 1.5rem;
+        font-size: 1.25rem;
         margin: 0;
         font-family: 'Balsamiq Sans', var(--sans);
     }
@@ -155,10 +189,6 @@
         font-weight: 500; 
         font-family: 'Balsamiq Sans', var(--sans);
         font-size: 1rem;
-    }
-
-    .found {
-        //background-color: gray;
     }
 
     .found::before {
@@ -193,19 +223,67 @@
         display: none;
         position: absolute;
         z-index: 1000;
-        top: 60%;
+        top: 40%;
         left: 50%;
         transform: translate(-50%, -50%);
         transition: 1s ease-in-out;
+        font-family: 'Balsamiq Sans', var(--sans);
     }
 
     .is-visible {
         display: inline-block;
     }
 
+    .is-dimmed {
+        opacity: 0.15;
+    }
+
+    .is-inactive {
+        pointer-events: none;
+    }
+
     .bingo p {
         font-family: 'Balsamiq Sans', var(--sans);
         font-weight: 700;
-        font-size: 10rem;
+        font-size: 10rem !important;
+        color: #f93e19;
+    }
+
+    .confetti {
+        position: absolute;
+        top: 30%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    @media only screen and (max-width: 640px) {
+        #cats {
+            padding: 0.5rem;
+            margin: 0;
+        }
+        .header {
+            font-size: 1.25rem;
+            margin: 0.75rem 0;
+        }
+
+        .row p {
+            font-size: 0.75rem;
+        }
+
+        .row img {
+            width: 70%;
+        }
+
+        .block p {
+            font-size: 0.75rem;
+        }
+
+        .bingo {
+            top: 25%;
+        }
+
+        .bingo p {
+            font-size: 4rem;
+        }
     }
 </style>

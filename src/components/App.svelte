@@ -8,9 +8,5 @@
 
 <Meta />
 
-<Header />
-
-<!-- demo of all features -->
 <Cats />
 
-<Footer />
