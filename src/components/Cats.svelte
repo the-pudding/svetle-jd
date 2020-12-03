@@ -6,7 +6,7 @@
 
     // VARIABLES
     let w;
-    const catPlaces = [ 'in the window', 'on the porch', 'in the yard']
+    const catPlaces = [ 'in window', 'on porch', 'in yard']
     const catTypes = [ 'tuxedo', 'gray tabby', 'orange tabby', 'black', 'calico', 'gray', 'gray & white', 'orange & white', 'white', 'brown tabby', 'tortoiseshell'];
     let bingo = false;
     let bingoColumn;
@@ -55,17 +55,17 @@
 
     // BINGO
     function checkBingo() {
-        let blockCar0 = document.getElementById('block-inthewindow-0').classList.contains('found')
-        let blockCar1 = document.getElementById('block-inthewindow-1').classList.contains('found')
-        let blockCar2 = document.getElementById('block-inthewindow-2').classList.contains('found')
+        let blockCar0 = document.getElementById('block-inwindow-0').classList.contains('found')
+        let blockCar1 = document.getElementById('block-inwindow-1').classList.contains('found')
+        let blockCar2 = document.getElementById('block-inwindow-2').classList.contains('found')
 
-        let blockPorch0 = document.getElementById('block-ontheporch-0').classList.contains('found')
-        let blockPorch1 = document.getElementById('block-ontheporch-1').classList.contains('found')
-        let blockPorch2 = document.getElementById('block-ontheporch-2').classList.contains('found')
+        let blockPorch0 = document.getElementById('block-onporch-0').classList.contains('found')
+        let blockPorch1 = document.getElementById('block-onporch-1').classList.contains('found')
+        let blockPorch2 = document.getElementById('block-onporch-2').classList.contains('found')
 
-        let blockYard0 = document.getElementById('block-intheyard-0').classList.contains('found')
-        let blockYard1 = document.getElementById('block-intheyard-1').classList.contains('found')
-        let blockYard2 = document.getElementById('block-intheyard-2').classList.contains('found')
+        let blockYard0 = document.getElementById('block-inyard-0').classList.contains('found')
+        let blockYard1 = document.getElementById('block-inyard-1').classList.contains('found')
+        let blockYard2 = document.getElementById('block-inyard-2').classList.contains('found')
 
         //bingo check
         //columns
@@ -312,7 +312,7 @@
         }
 
         .row p {
-            font-size: 0.70rem;
+            font-size: 0.75rem;
         }
 
         .img-wrapper {
@@ -321,7 +321,7 @@
         }
 
         .block p {
-            font-size: 0.70rem;
+            font-size: 0.75rem;
         }
 
         .bingo {
