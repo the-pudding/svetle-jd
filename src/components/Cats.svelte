@@ -312,7 +312,7 @@
         }
 
         .row p {
-            font-size: 0.75rem;
+            font-size: 0.70rem;
         }
 
         .img-wrapper {
@@ -321,7 +321,7 @@
         }
 
         .block p {
-            font-size: 0.75rem;
+            font-size: 0.70rem;
         }
 
         .bingo {
