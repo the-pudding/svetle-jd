@@ -6,8 +6,8 @@
 
     // VARIABLES
     let w;
-    const catPlaces = [ 'on a car', 'on the porch', 'in the yard']
-    const catTypes = [ 'tuxedo', 'gray tabby', 'orange tabby', 'black', 'calico', 'gray', 'gray & white', 'orange & white', 'white', 'brown tabby'];
+    const catPlaces = [ 'in the window', 'on the porch', 'in the yard']
+    const catTypes = [ 'tuxedo', 'gray tabby', 'orange tabby', 'black', 'calico', 'gray', 'gray & white', 'orange & white', 'white', 'brown tabby', 'tortoise shell'];
     let bingo = false;
     let bingoColumn;
     let allColumns;
@@ -55,9 +55,9 @@
 
     // BINGO
     function checkBingo() {
-        let blockCar0 = document.getElementById('block-onacar-0').classList.contains('found')
-        let blockCar1 = document.getElementById('block-onacar-1').classList.contains('found')
-        let blockCar2 = document.getElementById('block-onacar-2').classList.contains('found')
+        let blockCar0 = document.getElementById('block-inthewindow-0').classList.contains('found')
+        let blockCar1 = document.getElementById('block-inthewindow-1').classList.contains('found')
+        let blockCar2 = document.getElementById('block-inthewindow-2').classList.contains('found')
 
         let blockPorch0 = document.getElementById('block-ontheporch-0').classList.contains('found')
         let blockPorch1 = document.getElementById('block-ontheporch-1').classList.contains('found')
