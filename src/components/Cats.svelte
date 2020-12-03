@@ -7,7 +7,7 @@
     // VARIABLES
     let w;
     const catPlaces = [ 'in the window', 'on the porch', 'in the yard']
-    const catTypes = [ 'tuxedo', 'gray tabby', 'orange tabby', 'black', 'calico', 'gray', 'gray & white', 'orange & white', 'white', 'brown tabby', 'tortoise shell'];
+    const catTypes = [ 'tuxedo', 'gray tabby', 'orange tabby', 'black', 'calico', 'gray', 'gray & white', 'orange & white', 'white', 'brown tabby', 'tortoiseshell'];
     let bingo = false;
     let bingoColumn;
     let allColumns;
